@@ -75,8 +75,19 @@ exports.addProduct = (req, res) => {
       name: req.body.name,
       shortdesc: req.body.shortdesc,
       description: req.body.description,
-      targetprice: req.body.targetprice,
+      colors: req.body.colors,
+      
       price: req.body.price,
+      currency: req.body.currency,
+      discount: req.body.discount,
+
+      badgetype: req.body.badgetype,
+      badgetext: req.body.badgetext,
+      logo: req.body.logo,
+      rating: req.body.rating,
+      tags: req.body.tags,
+      otherinfo: req.body.otherinfo,
+
       image: req.body.image
     })
     newProduct.save()

@@ -29,13 +29,22 @@ const ProductSchema = new mongoDb.Schema({
     trim: true,
     required: [true, 'Please add text']
   },
-  targetprice:{
-    type: Number,
-    required:[true,'Please add a price']
+  colors:{
+    type:Array,
+    required:[true, 'Please add a color']
   },
   price:{
     type: Number,
     required:[true,'Please add a price']
+  },
+  currency:{
+    type: String,
+    trim: true,
+    required: [true, 'Please add USD,SEK,EUR']
+  },
+  discount:{
+    type: Number,
+    required:[true,'Please add a value 0-100']
   },
   badgetype:{
     type: String,
@@ -56,6 +65,10 @@ const ProductSchema = new mongoDb.Schema({
   rating:{
     type: Number,
     required:false
+  },
+  tags:{
+    type: Array,
+    required:[true, 'Please add a tag ex. Fashion']
   },
   otherinfo:{
     type: String,
