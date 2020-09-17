@@ -4,8 +4,13 @@
 // skapar en ny instans av mongoose
 const db = require('mongoose');
 const colors = require('colors');
+const dotenv = require('dotenv');
+
+// sätter sökväg till dotenv varibler
+dotenv.config({path:'./config/config.env'})
 
 // sätter upp serveraddress mongo server
+const mongoUri = process.env.MONGO_URI;
 
 
 
