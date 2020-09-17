@@ -6,8 +6,7 @@ const db = require('mongoose');
 const colors = require('colors');
 
 // sätter upp serveraddress mongo server
-// const mongoUri = "mongodb+srv://JM_Shop_1234:JM_Shop_1234@cluster0-9et03.mongodb.net/WebshopApi?retryWrites=true&w=majority"
-const mongoUri = "mongodb+srv://eShop_1234:eShop_1234@cluster0.m1k81.mongodb.net/eShopApi?retryWrites=true&w=majority"
+
 
 
 // starta mongo database
