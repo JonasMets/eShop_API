@@ -14,6 +14,11 @@ const ProductSchema = new mongoDb.Schema({
     trim: true,
     required: [true, 'Please add category']
   },
+  brand:{
+    type: String,
+    trim: true,
+    required: [true, 'Please add brand']
+  },
   name: {
     type: String,
     trim: true,

@@ -72,6 +72,7 @@ exports.addProduct = (req, res) => {
     let newProduct = new Product({
       _id: new mongodb.Types.ObjectId,
       category: req.body.category,
+      brand: req.body.brand,
       name: req.body.name,
       shortdesc: req.body.shortdesc,
       description: req.body.description,
