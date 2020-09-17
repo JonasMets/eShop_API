@@ -62,6 +62,42 @@ exports.getOneProduct = (req, res, next) => {
 };
 
 
+
+
+
+// nytt 20-09-17
+exports.getProductByCategory = (req, res, next) => {
+  // console.log(req.params.category)
+  // 
+  Product.find({ category: req.params. category})
+    .then((data) => {
+      //
+      const counter = data.length;
+      res.status(200).json({
+        statusCode: 200,
+        status: true,
+        message: (counter > 0 ? 'Data was retrieved' : `No data for category with id:${req.params.category}`),
+        count: counter,
+        data
+      })
+
+    })
+    .catch((error) => {
+      res.status(400).json({
+        statusCode: 400,
+        status: false,
+        message: 'Could not get any data',
+        error
+      })
+    })
+  // 
+};
+
+
+
+
+
+
 // @desc Lägger till produkt
 // @route POST /api/v1/products
 //  lägger till en produkt från ett json objekt

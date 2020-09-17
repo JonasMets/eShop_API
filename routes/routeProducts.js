@@ -12,7 +12,8 @@ const {getAllProducts,
         addProducts,
         updateProduct,
         deleteProduct,
-        addProduct } =require('../controllers/controllerProducts');
+        addProduct,
+        getProductByCategory } =require('../controllers/controllerProducts');
 
 
 
@@ -42,6 +43,13 @@ router.route('/')
 //  http://localhost:9999/api/v1/products/ id
 router.route('/:id')
 .get(getOneProduct)
+
+
+// nytt 20-09-17
+// hämta all produkter i category x
+//  http://localhost:9999/api/v1/products/category/"category"
+router.route('/category/:category')
+.get(getProductByCategory)
 
 
 // uppdater en produkt med :id
