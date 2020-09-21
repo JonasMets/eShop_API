@@ -26,7 +26,7 @@ const serverUri = 'http://localhost:'+PORT;
 const routeProducts = require('./routes/routeProducts');
 
 // importerar modulen routeUsers som innehåller router för users
-// const routeUsers = require('./routes/routeUsers');
+const routeUsers = require('./routes/routeUsers');
 
 // importerar modulen routeOrders som innehåller router för orders
 // const routeOrders = require('./routes/routeOrders');
@@ -72,7 +72,7 @@ app.use('/api/v1/products',routeProducts );
 
 // kopplar ihop routeUsers route med server app
 // så att man  kan anropa http://localhost:9999/api/v1/users
-// app.use('/api/v1/users',routeUsers );
+app.use('/api/v1/users',routeUsers );
 
 
 // kopplar ihop routeUsers route med server app
