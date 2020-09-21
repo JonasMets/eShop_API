@@ -19,7 +19,9 @@ exports.registerUser = (req, res) => {
   try {
     console.log(1)
 
-    User.find({ email: req.body.email })
+    //  $or:[{email: req.body.userNameOrEmail},{userName: req.body.userNameOrEmail}]
+    // { email: req.body.email }
+    User.find({ $or:[{email: req.body.email},{userName: req.body.userName}] })
       .then(exists => {
         console.log(2)
         console.log(exists)
@@ -29,7 +31,7 @@ exports.registerUser = (req, res) => {
           return res.status(400).json({
             statusCode: 400,
             status: false,
-            message: 'User with same email address already exists.'
+            message: 'email address or username already exists.'
           })
         }
 
