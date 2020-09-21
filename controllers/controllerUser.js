@@ -18,62 +18,62 @@ exports.registerUser = (req, res) => {
   console.log(req.body)
   try {
     console.log(1)
-    
+
     User.find({ email: req.body.email })
-    .then(exists => {
-      console.log(2)
-      console.log(exists)
+      .then(exists => {
+        console.log(2)
+        console.log(exists)
 
-      if (exists.length > 0) {
-        console.log(3)
-        return res.status(400).json({
-          statusCode: 400,
-          status: false,
-          message: 'User with same email address already exists.'
-        })
-      }
-
-      // console.log(req.body)
-
-      encrypt.hash(req.body.passWord, encrypt.genSaltSync(10), (error, hash) => {
-        console.log(4)
-        if (error) {
-          console.log(5)
-          console.log(error)
-          return res.status(500).json({
-            statusCode: 500,
+        if (exists.length > 0) {
+          console.log(3)
+          return res.status(400).json({
+            statusCode: 400,
             status: false,
-            message: 'Error: Failed to create user password hash.'
+            message: 'User with same email address already exists.'
           })
         }
 
-        const user = new User(
-          {
-            _id: new mongodb.Types.ObjectId,
-            userName: req.body.userName,
-            email: req.body.email,
-            passWordHash: hash
-          }
-        )
+        // console.log(req.body)
 
-        user.save()
-          .then(() => {
-            res.status(201).json({
-              statusCode: 201,
-              status: true,
-              message: 'User was successfully created.'
-            })
-          })
-          .catch(error => {
+        encrypt.hash(req.body.passWord, encrypt.genSaltSync(10), (error, hash) => {
+          console.log(4)
+          if (error) {
+            console.log(5)
             console.log(error)
-            res.status(500).json({
+            return res.status(500).json({
               statusCode: 500,
               status: false,
-              message: 'Unable to create user. Please contact the System Administrator.'
+              message: 'Error: Failed to create user password hash.'
             })
-          })
+          }
+
+          const user = new User(
+            {
+              _id: new mongodb.Types.ObjectId,
+              userName: req.body.userName,
+              email: req.body.email,
+              passWordHash: hash
+            }
+          )
+
+          user.save()
+            .then(() => {
+              res.status(201).json({
+                statusCode: 201,
+                status: true,
+                message: 'User was successfully created.'
+              })
+            })
+            .catch(error => {
+              console.log(error)
+              res.status(500).json({
+                statusCode: 500,
+                status: false,
+                message: 'Unable to create user. Please contact the System Administrator.'
+              })
+            })
+        })
       })
-    })
     console.log(6)
 
 
@@ -90,25 +90,30 @@ exports.registerUser = (req, res) => {
   }
 
 
-  
+
 }
 
 
 exports.loginUser = (req, res) => {
 
-  User.findOne({ email: req.body.email })
+  // email: req.body.email    userNameOrEmail 
+  //   { email: req.body.userNameOrEmail, userName: req.body.userNameOrEmail }
+  User.findOne({ $or:[{email: req.body.userNameOrEmail},{userName: req.body.userNameOrEmail}] })
     .then(user => {
+
+      console.log(user)
+
       if (user === null) {
         console.log(user)
         return res.status(401).json({
           statusCode: 401,
           status: false,
-          message: 'Incorrect email address or password'
+          message: 'Incorrect email or username'
         })
       }
 
       try {
-        encrypt.compare(req.body.password, user.passWordHash, (error, result) => {
+        encrypt.compare(req.body.passWord, user.passWordHash, (error, result) => {
           if (result) {
             return res.status(200).json({
               statusCode: 200,
@@ -125,7 +130,7 @@ exports.loginUser = (req, res) => {
           console.log(error)
 
           return res.status(401).json({
-            
+
             statusCode: 401,
             status: false,
             message: 'Incorrect email address or password'
