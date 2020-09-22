@@ -29,7 +29,7 @@ const routeProducts = require('./routes/routeProducts');
 const routeUsers = require('./routes/routeUsers');
 
 // importerar modulen routeOrders som innehåller router för orders
-// const routeOrders = require('./routes/routeOrders');
+const routeOrders = require('./routes/routeOrders');
 
 
 const mongodb = require('./database/mongodbWebShop')
@@ -77,7 +77,7 @@ app.use('/api/v1/users',routeUsers );
 
 // kopplar ihop routeUsers route med server app
 // så att man  kan anropa http://localhost:9999/api/v1/orders
-// app.use('/api/v1/orders',routeOrders );
+app.use('/api/v1/orders',routeOrders );
 
 
 //default testroute anrop om inget annat skickas in
