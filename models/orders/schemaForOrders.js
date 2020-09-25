@@ -13,8 +13,8 @@ const OrderSchema = mongoDb.Schema({
   userData:{type:Object, required:[true, 'Please add user data']},
   shippingData:{type:Object, required:[true, 'Please add shippingdata']},
   orderItems:{type:Array, required:[true, 'Please add order item']},
-  orderTotalAmount:{type:Number, required:[true, 'Please add order amount']}
-
+  orderTotalAmount:{type:Number, required:[true, 'Please add order amount']},
+  paymentType:{ type: String, required: [true, 'Please add payment Type'] },
 })
 
 
