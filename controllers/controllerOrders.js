@@ -24,7 +24,8 @@ exports.addOrder = (req, res)=>{
     shippingData: req.body.shippingData,
     orderItems: req.body.orderItems,
     orderTotalAmount: req.body.orderTotalAmount,
-    paymentType: req.body.paymentType
+    paymentType: req.body.paymentType,
+    shippingType: req.body.shippingType,
 
   })
   newOrder.save()

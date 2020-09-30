@@ -15,6 +15,7 @@ const OrderSchema = mongoDb.Schema({
   orderItems:{type:Array, required:[true, 'Please add order item']},
   orderTotalAmount:{type:Number, required:[true, 'Please add order amount']},
   paymentType:{ type: String, required: [true, 'Please add payment Type'] },
+  shippingType:{ type: String, required: [true, 'Please add shipping Type'] },
 })
 
 
