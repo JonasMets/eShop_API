@@ -21,7 +21,7 @@ exports.registerUser = (req, res) => {
 
     //  $or:[{email: req.body.userNameOrEmail},{userName: req.body.userNameOrEmail}]
     // { email: req.body.email }
-    User.find({ $or:[{email: req.body.email},{userName: req.body.userName}] })
+    User.find({ $or: [{ email: req.body.email }, { userName: req.body.userName }] })
       .then(exists => {
         console.log(2)
         console.log(exists)
@@ -98,56 +98,67 @@ exports.registerUser = (req, res) => {
 
 exports.loginUser = (req, res) => {
 
-  // email: req.body.email    userNameOrEmail 
-  //   { email: req.body.userNameOrEmail, userName: req.body.userNameOrEmail }
-  User.findOne({ $or:[{email: req.body.userNameOrEmail},{userName: req.body.userNameOrEmail}] })
-    .then(user => {
+  try {
+    // email: req.body.email    userNameOrEmail 
+    //   { email: req.body.userNameOrEmail, userName: req.body.userNameOrEmail }
+    User.findOne({ $or: [{ email: req.body.userNameOrEmail }, { userName: req.body.userNameOrEmail }] })
+      .then(user => {
 
-      console.log(user)
-
-      if (user === null) {
         console.log(user)
-        return res.status(401).json({
-          statusCode: 401,
-          status: false,
-          message: 'Incorrect email or username'
-        })
-      }
 
-      try {
-        encrypt.compare(req.body.passWord, user.passWordHash, (error, result) => {
-          if (result) {
-            return res.status(200).json({
-              statusCode: 200,
-              status: true,
-              message: 'Authentication was successful.',
-              token: auth.genToken(user._id),
-              user: {
-                id: user._id,
-                email: user.email,
-                userName: user.userName,
-              }
-            })
-          }
-          console.log(error)
-
+        if (user === null) {
+          console.log(user)
           return res.status(401).json({
-
             statusCode: 401,
             status: false,
-            message: 'Incorrect email address or password'
+            message: 'Incorrect email or username'
           })
+        }
 
-        })
-      }
-      catch {
-        return res.status(500).json({
-          statusCode: 500,
-          status: false,
-          message: 'Unable to authenticate user. Please contact the System Administrator'
-        })
-      }
+        try {
+          encrypt.compare(req.body.passWord, user.passWordHash, (error, result) => {
+            if (result) {
+              return res.status(200).json({
+                statusCode: 200,
+                status: true,
+                message: 'Authentication was successful.',
+                token: auth.genToken(user._id),
+                user: {
+                  id: user._id,
+                  email: user.email,
+                  userName: user.userName,
+                }
+              })
+            }
+            console.log(error)
+
+            return res.status(401).json({
+
+              statusCode: 401,
+              status: false,
+              message: 'Incorrect email address or password'
+            })
+
+          })
+        }
+        catch {
+          return res.status(500).json({
+            statusCode: 500,
+            status: false,
+            message: 'Unable to authenticate user. Please contact the System Administrator'
+          })
+        }
+      })
+  } catch (error) {
+    console.log(error.name)
+
+    res.status(500).json({
+      statusCode: 500,
+      status: false,
+      message: 'Unable to authenticate user.'
     })
+  }
+
 }
 
 
